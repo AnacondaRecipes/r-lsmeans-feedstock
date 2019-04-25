@@ -1,4 +1,4 @@
-{% set version = '2.27-62' %}
+{% set version = '2.30-0' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -11,42 +11,31 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/lsmeans_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/lsmeans/lsmeans_{{ version }}.tar.gz
-  sha256: ffccf0235854a7cae477c1141e678e64f300fe2a4a0d0545c648aa8a66a369b5
+  sha256: aef4c2fe4cb292edac79e83f50feac83429f6d7d50fe1780980eacf8dc6f65fc
 
 build:
   merge_build_host: True  # [win]
   # If this is a new build for the same version, increment the build number.
   number: 0
+  noarch: generic
 
   # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
-# Suggests: car, lattice, MCMCpack, mediation, multcompView, ordinal, pbkrtest (>= 0.4-1), CARBayes, coxme, gee, geepack, glmmADMB, lme4, lmerTest (>= 2.0.32), MASS, MCMCglmm, nnet, pscl, rsm, rstan, rstanarm, survival
+# Suggests:
 requirements:
   build:
     - {{posix}}zip               # [win]
 
   host:
     - r-base
-    - r-coda >=0.17
-    - r-estimability
-    - r-multcomp
-    - r-mvtnorm
-    - r-nlme
-    - r-plyr
-    - r-xtable >=1.8_2
+    - r-emmeans >=1.3
 
   run:
     - r-base
-    - r-coda >=0.17
-    - r-estimability
-    - r-multcomp
-    - r-mvtnorm
-    - r-nlme
-    - r-plyr
-    - r-xtable >=1.8_2
+    - r-emmeans >=1.3
 
 test:
   commands:
@@ -63,16 +52,15 @@ test:
 about:
   home: https://CRAN.R-project.org/package=lsmeans
   license: GPL-2 | GPL-3
-  summary: 'Obtain least-squares means for many linear, generalized linear,  and mixed models.
-    Compute contrasts or linear functions of  least-squares means, and comparisons of
-    slopes.  Plots and compact letter displays. Least-squares means were proposed in
-    Harvey, W (1960) "Least-squares analysis of data with unequal subclass numbers",
-    Tech Report ARS-20-8, USDA National Agricultural Library, and discussed further
-    in Searle, Speed, and Milliken (1980) "Population marginal means  in the linear
-    model: An alternative to least squares means",  The American Statistician 34(4),
-    216-221 <doi:10.1080/00031305.1980.10483031>. NOTE: Users are encouraged to switch
-    to the ''emmeans'' package, as ''lsmeans'' will be archived in the not-too-distant
-    future.'
+  summary: 'Obtain least-squares means for linear, generalized linear,  and mixed models. Compute
+    contrasts or linear functions of  least-squares means, and comparisons of slopes.  Plots
+    and compact letter displays. Least-squares means were proposed in Harvey, W (1960)
+    "Least-squares analysis of data with unequal subclass numbers", Tech Report ARS-20-8,
+    USDA National Agricultural Library, and discussed further in Searle, Speed, and
+    Milliken (1980) "Population marginal means  in the linear model: An alternative
+    to least squares means",  The American Statistician 34(4), 216-221 <doi:10.1080/00031305.1980.10483031>.
+    NOTE: lsmeans now relies primarily on code in the ''emmeans'' package. ''lsmeans''
+    will be archived in the near future.'
 
   license_family: GPL3
 
@@ -87,24 +75,20 @@ extra:
 # Package: lsmeans
 # Type: Package
 # Title: Least-Squares Means
-# Version: 2.27-62
-# Date: 2018-05-10
-# Authors@R: c(person("Russell", "Lenth", role = c("aut", "cre", "cph"),  email = "russell-lenth@uiowa.edu"), person("Jonathon", "Love", role = "ctb"))
-# Depends: methods, R (>= 3.2)
-# Suggests: car, lattice, MCMCpack, mediation, multcompView, ordinal, pbkrtest (>= 0.4-1), CARBayes, coxme, gee, geepack, glmmADMB, lme4, lmerTest (>= 2.0.32), MASS, MCMCglmm, nnet, pscl, rsm, rstan, rstanarm, survival
-# Imports: estimability, graphics, stats, utils, nlme, coda (>= 0.17), multcomp, plyr, mvtnorm, xtable (>= 1.8-2)
-# Additional_repositories: http://glmmadmb.r-forge.r-project.org/repos
-# BugReports: https://github.com/rvlenth/lsmeans/issues
-# LazyData: yes
+# Version: 2.30-0
+# Date: 2018-11-02
+# Authors@R: c(person("Russell", "Lenth", role = c("aut", "cre", "cph"),  email = "russell-lenth@uiowa.edu"))
+# Depends: emmeans (>= 1.3), methods, R (>= 3.2)
+# Suggests:
 # ByteCompile: yes
-# Description: Obtain least-squares means for many linear, generalized linear,  and mixed models. Compute contrasts or linear functions of  least-squares means, and comparisons of slopes.  Plots and compact letter displays. Least-squares means were proposed in Harvey, W (1960) "Least-squares analysis of data with unequal subclass numbers", Tech Report ARS-20-8, USDA National Agricultural Library, and discussed further in Searle, Speed, and Milliken (1980) "Population marginal means  in the linear model: An alternative to least squares means",  The American Statistician 34(4), 216-221 <doi:10.1080/00031305.1980.10483031>. NOTE: Users are encouraged to switch to the 'emmeans' package, as 'lsmeans' will be archived in the not-too-distant future.
+# Description: Obtain least-squares means for linear, generalized linear,  and mixed models. Compute contrasts or linear functions of  least-squares means, and comparisons of slopes.  Plots and compact letter displays. Least-squares means were proposed in Harvey, W (1960) "Least-squares analysis of data with unequal subclass numbers", Tech Report ARS-20-8, USDA National Agricultural Library, and discussed further in Searle, Speed, and Milliken (1980) "Population marginal means  in the linear model: An alternative to least squares means",  The American Statistician 34(4), 216-221 <doi:10.1080/00031305.1980.10483031>. NOTE: lsmeans now relies primarily on code in the 'emmeans' package. 'lsmeans' will be archived in the near future.
 # License: GPL-2 | GPL-3
 # NeedsCompilation: no
-# Packaged: 2018-05-10 15:10:04 UTC; rlenth
-# Author: Russell Lenth [aut, cre, cph], Jonathon Love [ctb]
+# Packaged: 2018-11-02 19:06:49 UTC; rlenth
+# Author: Russell Lenth [aut, cre, cph]
 # Maintainer: Russell Lenth <russell-lenth@uiowa.edu>
 # Repository: CRAN
-# Date/Publication: 2018-05-11 11:03:05 UTC
+# Date/Publication: 2018-11-02 23:50:11 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for
